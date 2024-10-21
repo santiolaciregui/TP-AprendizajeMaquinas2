@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>batch_processing module &mdash; documentación de TP_Final_AMQ2 - </title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="train_models module" href="train_models.html" />
+    <link rel="prev" title="primeros pasos" href="primeros%20pasos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TP_Final_AMQ2
+          </a>
+              <div class="version">
+                2.1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="primeros%20pasos.html">primeros pasos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">batch_processing module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#descripcion">Descripción:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="train_models.html">train_models module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TP_Final_AMQ2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">batch_processing module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/batch_processing.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="batch-processing-module">
+<h1>batch_processing module<a class="headerlink" href="#batch-processing-module" title="Link to this heading"></a></h1>
+<section id="descripcion">
+<h2>Descripción:<a class="headerlink" href="#descripcion" title="Link to this heading"></a></h2>
+<p>Este script define un flujo de procesamiento de datos y modelos de aprendizaje
+automático mediante Metaflow, integrando almacenamiento en AWS S3 (MinIO),
+predicciones con varios modelos y la ingestión de resultados en Redis.</p>
+<p><strong>Elementos:</strong></p>
+<dl>
+<dt>1 - CombinedAndBatchProcessing(FlowSpec):</dt><dd><p>Clase que implementa un flujo para el procesamiento por lotes y
+la predicción usando modelos cargados desde S3, con la posibilidad
+de almacenar los resultados en Redis.</p>
+</dd>
+<dt>2 - start(self):</dt><dd><p>Inicio del flujo.</p>
+<p>Este paso imprime un mensaje indicando el inicio del flujo y avanza a
+los siguientes pasos para la carga de datos y modelos.</p>
+</dd>
+<dt>3 - load_data(self):</dt><dd><p>Carga los datos desde S3 y aplica un escalador previamente entrenado.</p>
+<p>Este paso carga los datos de entrada desde un archivo CSV almacenado en S3 y
+utiliza un scaler almacenado en S3 para escalar los datos antes de
+procesarlos. Luego avanza al paso de procesamiento por lotes.</p>
+</dd>
+<dt>4 - load_models(self):</dt><dd><p>Carga los modelos previamente entrenados desde S3.</p>
+<p>Este paso obtiene los modelos almacenados en S3, que incluyen un árbol de
+decisión, SVM, KNN y regresión logística. Avanza al siguiente paso para
+procesar los datos en lotes.</p>
+</dd>
+<dt>5 - batch_processing(self, previous_tasks):</dt><dd><p>Realiza el procesamiento por lotes con los modelos cargados.</p>
+<p>Este paso toma los datos escalados y los utiliza para obtener predicciones
+de los modelos cargados previamente. Las predicciones se almacenan en un
+diccionario y se mapean las clases como «Maligno» o «Benigno».</p>
+</dd>
+<dt>6 - ingest_redis(self):</dt><dd><p>Ingresa las predicciones en Redis.</p>
+<p>Este paso toma los resultados del procesamiento por lotes y los almacena
+en Redis utilizando un pipeline para mayor eficiencia.</p>
+</dd>
+<dt>7 - def end(self):</dt><dd><p>Finaliza el flujo de procesamiento.</p>
+<p>Este paso imprime un mensaje indicando que el procesamiento ha terminado
+y realiza una prueba de escritura en Redis para verificar la conectividad.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="primeros%20pasos.html" class="btn btn-neutral float-left" title="primeros pasos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="train_models.html" class="btn btn-neutral float-right" title="train_models module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2024, Cohorte16.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

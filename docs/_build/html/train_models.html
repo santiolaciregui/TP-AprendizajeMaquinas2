@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>train_models module &mdash; documentación de TP_Final_AMQ2 - </title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="prev" title="batch_processing module" href="batch_processing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TP_Final_AMQ2
+          </a>
+              <div class="version">
+                2.1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="primeros%20pasos.html">primeros pasos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch_processing.html">batch_processing module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">train_models module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#descripcion">Descripción:</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TP_Final_AMQ2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">train_models module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/train_models.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="train-models-module">
+<h1>train_models module<a class="headerlink" href="#train-models-module" title="Link to this heading"></a></h1>
+<section id="descripcion">
+<h2>Descripción:<a class="headerlink" href="#descripcion" title="Link to this heading"></a></h2>
+<p>Este script implementa un flujo de trabajo de machine learning utilizando la librería Metaflow,
+que permite el entrenamiento y la evaluación de modelos de clasificación sobre el conjunto
+de datos de cáncer de mama.</p>
+<p><strong>Elementos:</strong></p>
+<dl>
+<dt>1 - class Metric(Base):</dt><dd><p>Clase para representar la tabla de métricas en la base de datos.</p>
+<p>id (int): Identificador único de la métrica.
+model (str): Nombre del modelo.
+precision (float): Precisión del modelo.
+recall (float): Recall del modelo.
+f1_score (float): F1 Score del modelo.</p>
+</dd>
+<dt>2 - def check_database_connection():</dt><dd><p>Verifica la conexión a la base de datos.
+Lanza una excepción si no se puede conectar.</p>
+</dd>
+<dt>3 - class ConfusionMatrixFlow(FlowSpec):</dt><dd><p>Flujo para la creación y evaluación de modelos
+de clasificación con matrices de confusión.
+Incluye la carga de datos, entrenamiento de modelos,
+evaluación y almacenamiento de métricas.</p>
+</dd>
+<dt>4 - def start(self):</dt><dd><p>Paso inicial que inicia el flujo.</p>
+</dd>
+<dt>5 - def load_and_prepare_data(self):</dt><dd><p>Carga y prepara los datos del conjunto de datos de cáncer de mama.
+Se divide el conjunto de datos en entrenamiento y prueba, y se
+escalan las características.
+También se suben los archivos CSV a S3 y se guarda el escalador.</p>
+</dd>
+<dt>6 - def train_tree_model(self):</dt><dd><p>Entrena un modelo de árbol de decisión y almacena las métricas.
+Se realiza una búsqueda de hiperparámetros con validación
+cruzada y se almacenan las métricas del modelo entrenado.</p>
+</dd>
+<dt>7 - def train_svc_model(self):</dt><dd><p>Entrena un modelo de máquina de soporte vectorial (SVC)y almacena las métricas.
+Se realiza una búsqueda de hiperparámetros con validación cruzada y se almacenan
+las métricas del modelo entrenado.</p>
+</dd>
+<dt>8 - def train_knn_model(self):</dt><dd><p>Entrena un modelo de k-vecinos más cercanos (KNN) y almacena las métricas.
+Se realiza una búsqueda de hiperparámetros con validación cruzada y se almacenan
+las métricas del modelo entrenado.</p>
+</dd>
+<dt>9 - def train_reglog_model(self):</dt><dd><p>Entrena un modelo de regresión logística y almacena las métricas.
+Se realiza una búsqueda de hiperparámetros con validación cruzada y se almacenan
+las métricas del modelo entrenado.</p>
+</dd>
+<dt>10 - def join_models(self, inputs):</dt><dd><p>Combina los resultados de los modelos entrenados y almacena las métricas en la base de datos.</p>
+</dd>
+<dt>11 - def evaluate(self):</dt><dd><p>Evalúa el rendimiento de los modelos entrenados mediante métricas de clasificación,
+incluyendo la matriz de confusión y la curva ROC.
+Para cada modelo, se predicen las clases en el conjunto de prueba y se calculan las probabilidades
+para la clase positiva. Luego, se generan y almacenan las visualizaciones de la matriz de confusión
+y la curva ROC en un bucket de S3.
+Las métricas calculadas (precisión, recall, F1 y AUC) se almacenan en un diccionario para su
+posterior uso.
+Almacena las matrices de confusión como imágenes en S3, curvas ROC como imágenes en S3 y
+métricas de evaluación.</p>
+</dd>
+<dt>12 -  def store_results(self):</dt><dd><p>Almacena las métricas de evaluación de los modelos en una base de datos PostgreSQL.</p>
+<p>Utiliza la sesión de SQLAlchemy para agregar las métricas (precisión, recall y F1)
+de cada modelo al modelo de datos. Confirma la transacción y cierra la sesión.</p>
+</dd>
+<dt>13 -  def end(self):</dt><dd><p>Finaliza el flujo de evaluación de la matriz de confusión.</p>
+<p>Imprime los resultados de las métricas almacenadas en la base de datos,
+verificando que los datos se han guardado correctamente.</p>
+<p>Se consultan los resultados de la base de datos y se imprime la información
+de cada métrica almacenada.</p>
+</dd>
+<dt>14 - def upload_to_s3(self, file_name, bucket, object_name=None):</dt><dd><p>Sube un archivo a un bucket de Amazon S3.</p>
+<p>file_name (str): Ruta del archivo a subir.
+bucket (str): Nombre del bucket de S3.
+object_name (str, opcional): Nombre del objeto en el bucket.</p>
+<p>Captura y muestra un mensaje de error si la subida del archivo falla.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="batch_processing.html" class="btn btn-neutral float-left" title="batch_processing module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2024, Cohorte16.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
